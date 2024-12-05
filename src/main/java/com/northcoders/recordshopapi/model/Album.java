@@ -3,7 +3,9 @@ package com.northcoders.recordshopapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -23,5 +25,7 @@ public class Album {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
+    private LocalDateTime createdDt;
+    private LocalDateTime modifiedDt;
     public Album(){}
 }
