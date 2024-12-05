@@ -11,10 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface AlbumRepository extends CrudRepository<Album, Long> {
-    List<Album> findByArtistName(String artistName);
+
     Optional<Album> findByAlbumName(String title);
     List<Album> findByGenre(Genre genre);
-    List<Album> findByArtistId(Long artistId);
-
-        List<Album> findByReleaseDate(LocalDate releaseDate);
+   // List<Album> findByArtistId(Long artistId);
+    List<Album> findByReleaseDate(LocalDate releaseDate);
 }

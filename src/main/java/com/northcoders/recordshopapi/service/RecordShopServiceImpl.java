@@ -5,6 +5,8 @@ import com.northcoders.recordshopapi.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,9 @@ public class RecordShopServiceImpl implements RecordShopService{
     private AlbumRepository albumRepository;
     @Override
     public Album createAlbum(Album album) {
-        return null;
+        album.setCreatedDt(LocalDateTime.now());
+        album.setModifiedDt(LocalDateTime.now());
+        return albumRepository.save(album);
     }
     @Override
     public Album updateAlbum(Album album) {
@@ -28,7 +32,7 @@ public class RecordShopServiceImpl implements RecordShopService{
 
     @Override
     public List<Album> getAlbums() {
-        return List.of(new Album());
+        return (List<Album>) albumRepository.findAll();
     }
 
     @Override

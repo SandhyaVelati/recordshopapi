@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -15,13 +15,11 @@ import java.util.List;
 public class RecordShopController {
     @Autowired
     private RecordShopServiceImpl recordShopService;
-
     @PostMapping("/album")
     public ResponseEntity<Album> createAlbum(@RequestBody Album album) {
         Album createdAlbum = recordShopService.createAlbum(album);
         return new ResponseEntity<>(createdAlbum, HttpStatus.CREATED);
     }
-
     @GetMapping("/albums")
     public ResponseEntity<List<Album>> getAllAlbums() {
         return new ResponseEntity<>(recordShopService.getAlbums(),HttpStatus.OK);
@@ -38,7 +36,6 @@ public class RecordShopController {
         return new ResponseEntity<>(recordShopService.getAlbumByArtistName(artistName),HttpStatus.OK);
     }
 
-
     @PutMapping("/album/{id}")
     public ResponseEntity<Album> updateAlbum(@PathVariable Long id, @RequestBody Album album){
          return new ResponseEntity<>(recordShopService.updateAlbum(album),HttpStatus.OK);
@@ -49,6 +46,5 @@ public class RecordShopController {
         recordShopService.deleteAlbum(album);
         return new ResponseEntity<String>("deleted album successfully", HttpStatus.OK);
     }
-
 
 }

@@ -3,12 +3,11 @@ package com.northcoders.recordshopapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
+@Entity
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +20,22 @@ public class Album {
     @Enumerated(EnumType.STRING)
     private Genre genre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
     private LocalDateTime createdDt;
     private LocalDateTime modifiedDt;
     public Album(){}
+
+    public Album(long id, String albumName, LocalDate releaseDate,
+                 Genre genre, Artist artist, LocalDateTime createdDt, LocalDateTime modifiedDt) {
+        this.id = id;
+        this.albumName = albumName;
+        this.releaseDate = releaseDate;
+        this.genre = genre;
+        this.artist = artist;
+        this.createdDt = createdDt;
+        this.modifiedDt = modifiedDt;
+    }
 }

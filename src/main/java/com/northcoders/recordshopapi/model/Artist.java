@@ -15,8 +15,8 @@ public class Artist {
 
     private String artistName;
 
-    @OneToMany(mappedBy = "artist",cascade =CascadeType.ALL)
-    private List<Album> albums;
-    public Artist() {
-    }
+//    @OneToMany(mappedBy = "artist",cascade =CascadeType.ALL)
+//    private List<Album> albums;
+    public Artist() {}
+
 }
