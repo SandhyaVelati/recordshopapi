@@ -15,7 +15,7 @@ public class RecordshopapiApplication {
 		SpringApplication.run(RecordshopapiApplication.class, args);
 	}
 	@Bean
-	public OpenAPI todoApiInfo() {
+	public OpenAPI recordShopApiInfo() {
 		return new OpenAPI()
 				.info(new Info().title("Record Shop")
 						.description("excited to browse some albums? This is the API for you! \uD83D\uDE3A")

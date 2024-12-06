@@ -8,7 +8,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class AlbumRequestPojo {
+public class AlbumRequestUpdatePojo {
     @PositiveOrZero(message = "ID must be a positive number") //pattern doesn't work ono long
     private long id;
 
@@ -17,7 +17,6 @@ public class AlbumRequestPojo {
     @Pattern(regexp = "[a-zA-Z0-9- ]+", message = "Album name must not contain any special characters")
     private String albumName;
 
-    @NotNull(message = "Genre cannot be null")
     private Genre genre;
 
     @PastOrPresent(message = "Album release date must be in the past or present, format: yyyy-MM-dd ")
@@ -26,14 +25,17 @@ public class AlbumRequestPojo {
     private LocalDate releaseDate;
 
     @Valid
-    @NotNull(message = "Artist details are required")
     private ArtistPojo artist;
 
-    public AlbumRequestPojo(long id, String albumName, Genre genre, LocalDate releaseDate, ArtistPojo artist) {
+    public AlbumRequestUpdatePojo(long id, String albumName, Genre genre, LocalDate releaseDate, ArtistPojo artist) {
         this.id = id;
         this.albumName = albumName;
         this.genre = genre;
         this.releaseDate = releaseDate;
         this.artist = artist;
+    }
+
+    public AlbumRequestUpdatePojo() {
+
     }
 }
