@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidInputArgument.class)
+    public ResponseEntity<Object> handleInvalidInputArgumentsException(InvalidInputArgument e){
+        return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),HttpStatus.BAD_REQUEST);
+
+    }
+
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<Object> handleSQLIntegrityViolationExcpetions(SQLIntegrityConstraintViolationException e){
         return new ResponseEntity<>(new ExceptionResponse("Unique index or primary key violation"),HttpStatus.INTERNAL_SERVER_ERROR);

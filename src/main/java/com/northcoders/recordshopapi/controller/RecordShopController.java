@@ -1,9 +1,7 @@
 package com.northcoders.recordshopapi.controller;
 
-import com.northcoders.recordshopapi.model.Album;
-import com.northcoders.recordshopapi.model.AlbumRequestPojo;
-import com.northcoders.recordshopapi.model.AlbumRequestUpdatePojo;
-import com.northcoders.recordshopapi.model.AlbumResponsePojo;
+import com.northcoders.recordshopapi.Exception.InvalidInputArgument;
+import com.northcoders.recordshopapi.model.*;
 import com.northcoders.recordshopapi.service.RecordShopServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -49,11 +48,21 @@ public class RecordShopController {
 
 
     @GetMapping("/albums/artist/{name}")
-    public ResponseEntity<List<AlbumResponsePojo>> getAlbumsByArtistId(@PathVariable String name) {
+    public ResponseEntity<?> getAlbumsByArtistId(@PathVariable String name) {
         if(!name.matches("[a-zA-Z0-9- ]+")){
-            throw new RuntimeException("Invalid characters encountered in Artist name");
+            throw new InvalidInputArgument("Invalid characters encountered in Artist name");
+            //return new ResponseEntity<>(new RuntimeException("Invalid characters encountered in Artist name"),HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(recordShopService.getAlbumByArtistName(name),HttpStatus.OK);
+    }
+
+    @GetMapping("/albums/genre/{genre}")
+    public ResponseEntity<?> getAlbumsByGenre(@PathVariable String genre) {
+        if(Arrays.stream(Genre.values()).noneMatch(genreInEnum -> genre.equalsIgnoreCase(genreInEnum.toString()))){
+            throw new InvalidInputArgument("Invalid Genre encountered in input");
+            //return new ResponseEntity<>(new RuntimeException("Invalid Genre"),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(recordShopService.getAlbumByGenre(genre),HttpStatus.OK);
     }
 
 }

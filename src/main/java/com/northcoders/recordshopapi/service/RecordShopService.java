@@ -15,7 +15,7 @@ public interface RecordShopService {
     public void deleteAlbum(Long id);
     public List<AlbumResponsePojo> getAlbums();
     public AlbumResponsePojo getAlbumById(Long id);
-    public Album getAlbumByGenre(String genre);
+    public List<AlbumResponsePojo>  getAlbumByGenre(String genre);
 
     List<AlbumResponsePojo> getAlbumByArtistName(String name);
 
