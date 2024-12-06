@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -63,7 +65,23 @@ public class RecordShopController {
         }
         return new ResponseEntity<>(recordShopService.getAlbumByGenre(genre),HttpStatus.OK);
     }
-    @GetMapping("/albums/genre//year/{year}")
-    pub
+    @GetMapping("/albums/genre/year/{year}")
+    public ResponseEntity<?> getAlbumsByYear(@PathVariable Integer year){
+        if(year == null || year < 0 || year > LocalDate.now().getYear()){
+            throw new InvalidInputArgument("Invalid year, or future Date requested");
+        }
+        if(!year.toString().matches("\\d{4}")){
+            throw new InvalidInputArgument("please provide a valid year in the format YYYY");
+        }
+        return new ResponseEntity<>(recordShopService.getAlbumByReleasedDate(year),HttpStatus.OK);
+    }
+
+    @GetMapping("/albums/name/{albumName}")
+    public ResponseEntity<?> getAlbumsByYear(@PathVariable String albumName){
+        if(!albumName.matches("[a-zA-Z0-9- ]+")){
+            throw new InvalidInputArgument("Invalid characters encountered in Album name");
+        }
+        return new ResponseEntity<>(recordShopService.getAlbumByName(albumName),HttpStatus.OK);
+    }
 
 }
