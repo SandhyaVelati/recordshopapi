@@ -134,10 +134,17 @@ public class RecordShopServiceImpl implements RecordShopService{
         return getAlbumByArtistId(artistId);
 
     }
+
     @Override
-    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer Year) {
-        return null;
+    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer year) {
+        List<Album> albumsbyReleaseDate = albumRepository.findByReleaseDate(year);
+        if(albumsbyReleaseDate.isEmpty())
+        {
+            throw new AlbumNotFoundException("Albums released in the year "+ year+ " are unavailable");
+        }
+        return albumsbyReleaseDate.stream().map(this::mapDataToDTO).toList();
     }
+
     @Override
     public List<AlbumResponsePojo> getAlbumByArtistId(Long artistId) {
         List<Album> albumsByArtistId = albumRepository.findByArtistId(artistId);
@@ -145,5 +152,14 @@ public class RecordShopServiceImpl implements RecordShopService{
             throw new AlbumNotFoundException("Albums requested for the artist id: "+ artistId+ " not found");
         }
         return albumsByArtistId.stream().map(this::mapDataToDTO).toList();
+    }
+
+    @Override
+    public AlbumResponsePojo getAlbumByName(String name) {
+        Optional<Album> byAlbumName = albumRepository.findByAlbumName(name);
+        if(byAlbumName.isEmpty()){
+            throw new AlbumNotFoundException("Album with title " +name + " not found in our records");
+        }
+        return mapDataToDTO(byAlbumName.get());
     }
 }

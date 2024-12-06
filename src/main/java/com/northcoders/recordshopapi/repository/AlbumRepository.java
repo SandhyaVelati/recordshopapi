@@ -17,5 +17,7 @@ public interface AlbumRepository extends CrudRepository<Album, Long> {
     List<Album> findByGenre(Genre genre);
     @Query(value = "SELECT * FROM album where artist_id = ?1 order by id desc;", nativeQuery = true)
     List<Album> findByArtistId(Long artistId);
-    List<Album> findByReleaseDate(LocalDate releaseDate);
+
+    @Query(value = "SELECT * FROM album a where EXTRACT(YEAR FROM a.release_date) = ?1", nativeQuery = true)
+    List<Album> findByReleaseDate(Integer releaseDate);
 }

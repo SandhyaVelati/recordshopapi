@@ -19,9 +19,10 @@ public interface RecordShopService {
 
     List<AlbumResponsePojo> getAlbumByArtistName(String name);
 
-    public Album getAlbumByReleasedDate(Long artistId);
+
     public List<AlbumResponsePojo> getAlbumByArtistId(Long artistId);
 
-    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer Year);
+    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer year);
+    public AlbumResponsePojo getAlbumByName(String name);
 
 }
