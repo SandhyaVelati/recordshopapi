@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface RecordShopService {
     public AlbumResponsePojo createAlbum(AlbumRequestPojo album);
     public AlbumResponsePojo updateAlbum(Long id, AlbumRequestUpdatePojo album);
-    public void deleteAlbum(Album album);
+    public void deleteAlbum(Long id);
     public List<AlbumResponsePojo> getAlbums();
     public AlbumResponsePojo getAlbumById(Long id);
     public Album getAlbumByGenre(String genre);

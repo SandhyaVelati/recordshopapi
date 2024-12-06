@@ -146,7 +146,6 @@ class RecordShopControllerTest {
     @Test
     public void testUpdateAlbum_success() throws Exception{
         //arrange
-
         AlbumRequestUpdatePojo albumRequestPojo = new AlbumRequestUpdatePojo();
         albumRequestPojo.setAlbumName("TumHare the");
         albumRequestPojo.setGenre(Genre.ROCK);
@@ -172,5 +171,25 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("ROCK"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.artist.artistName").value("Yash"));
         verify(mockRecordShopService, times(1)).updateAlbum(eq(1L), any(AlbumRequestUpdatePojo.class));
+    }
+
+    @Test
+    public void testDeleteAlbum_Success() throws Exception {
+        doNothing().when(mockRecordShopService).deleteAlbum(1L);
+        mockMvcController.perform(MockMvcRequestBuilders.delete("/api/v1/album/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        verify(mockRecordShopService, times(1)).deleteAlbum(1L);
+    }
+
+    @Test
+    public void testDeleteAlbum_AlbumNotFound() throws Exception {
+        doThrow(new AlbumNotFoundException("Album with id: 1 not found"))
+                .when(mockRecordShopService).deleteAlbum(1L);
+
+        mockMvcController.perform(MockMvcRequestBuilders.delete("/api/v1/album/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+        verify(mockRecordShopService, times(1)).deleteAlbum(1L);
     }
 }

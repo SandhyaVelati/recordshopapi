@@ -1,5 +1,6 @@
 package com.northcoders.recordshopapi.service;
 
+import com.northcoders.recordshopapi.Exception.AlbumNotFoundException;
 import com.northcoders.recordshopapi.model.*;
 import com.northcoders.recordshopapi.repository.AlbumRepository;
 import com.northcoders.recordshopapi.repository.ArtistRepository;
@@ -246,6 +247,22 @@ public class RecordShopServiceImplTest {
         verify(mockArtistRepository, times(1)).findByArtistName("New Artist");
         verify(mockArtistRepository, times(1)).save(any(Artist.class));
         verify(mockAlbumRepository, times(1)).save(any(Album.class));
+    }
+
+    @Test
+    public void testDeleteAlbum_Success() {
+        Album albumInDbToDelete = Album.builder().id(1L).albumName("some album").build();
+        when(mockAlbumRepository.findById(1L)).thenReturn(Optional.of(albumInDbToDelete));
+        recordShopService.deleteAlbum(1L);
+        verify(mockAlbumRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void testDeleteAlbum_AlbumNotFound() {
+        Long albumId = 1L;
+        when(mockAlbumRepository.findById(albumId)).thenReturn(Optional.empty());
+        assertThrows(AlbumNotFoundException.class, () -> recordShopService.deleteAlbum(albumId));
+        verify(mockAlbumRepository, times(0)).deleteById(1L);
     }
 
 }

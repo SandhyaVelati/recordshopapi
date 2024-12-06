@@ -78,8 +78,13 @@ public class RecordShopServiceImpl implements RecordShopService{
 
     }
     @Override
-    public void deleteAlbum(Album album) {
-        albumRepository.delete(album);
+    public void deleteAlbum(Long id) {
+        Optional<Album> byId = albumRepository.findById(id);
+        if(byId.isEmpty()){
+            throw new AlbumNotFoundException("Album with id: "+ id + " not found");
+        }
+        albumRepository.deleteById(id);
+
     }
 
     @Override
