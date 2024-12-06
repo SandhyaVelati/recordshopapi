@@ -36,20 +36,24 @@ public class RecordShopController {
          return new ResponseEntity<>(recordShopService.getAlbumById(id),HttpStatus.OK);
          //orElseThrow -> controller advice
     }
-    @GetMapping("/albums/artist/{artistName}")
-    public ResponseEntity<List<Album>> getAlbumsByArtistName(@PathVariable String artistName) {
-        return new ResponseEntity<>(recordShopService.getAlbumByArtistName(artistName),HttpStatus.OK);
-    }
 
     @PutMapping("/album/{id}")
     public ResponseEntity<AlbumResponsePojo> updateAlbum(@PathVariable Long id, @Valid @RequestBody AlbumRequestUpdatePojo album){
          return new ResponseEntity<>(recordShopService.updateAlbum(id,album),HttpStatus.OK);
     }
-
     @DeleteMapping("/album/{id}")
     public ResponseEntity<String> deleteAlbum(@PathVariable Long id){
         recordShopService.deleteAlbum(id);
         return new ResponseEntity<String>("deleted album successfully", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/albums/artist/{name}")
+    public ResponseEntity<List<AlbumResponsePojo>> getAlbumsByArtistId(@PathVariable String name) {
+        if(!name.matches("[a-zA-Z0-9- ]+")){
+            throw new RuntimeException("Invalid characters encountered in Artist name");
+        }
+        return new ResponseEntity<>(recordShopService.getAlbumByArtistName(name),HttpStatus.OK);
     }
 
 }

@@ -124,15 +124,25 @@ public class RecordShopServiceImpl implements RecordShopService{
     }
 
     @Override
-    public List<Album> getAlbumByArtistName(String name) {
-        return null;
+    public List<AlbumResponsePojo> getAlbumByArtistName(String name) {
+        Optional<Artist> byArtistName = artistRepository.findByArtistName(name);
+        if(byArtistName.isEmpty()){
+            throw new RuntimeException("Artist not found, try searching with existing artists");
+        }
+        Long artistId = byArtistName.get().getId();
+        return getAlbumByArtistId(artistId);
+
     }
     @Override
     public Album getAlbumByReleasedDate(Long artistId) {
         return null;
     }
     @Override
-    public Album getAlbumByArtistId(Long artistId) {
-        return null;
+    public List<AlbumResponsePojo> getAlbumByArtistId(Long artistId) {
+        List<Album> albumsByArtistId = albumRepository.findByArtistId(artistId);
+        if(albumsByArtistId.isEmpty()){
+            throw new AlbumNotFoundException("Albums requested for the artist id: "+ artistId+ " not found");
+        }
+        return albumsByArtistId.stream().map(this::mapDataToDTO).toList();
     }
 }
