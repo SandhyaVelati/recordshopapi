@@ -22,4 +22,6 @@ public interface RecordShopService {
     public Album getAlbumByReleasedDate(Long artistId);
     public List<AlbumResponsePojo> getAlbumByArtistId(Long artistId);
 
+    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer Year);
+
 }

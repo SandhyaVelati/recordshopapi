@@ -60,9 +60,10 @@ public class RecordShopController {
     public ResponseEntity<?> getAlbumsByGenre(@PathVariable String genre) {
         if(Arrays.stream(Genre.values()).noneMatch(genreInEnum -> genre.equalsIgnoreCase(genreInEnum.toString()))){
             throw new InvalidInputArgument("Invalid Genre encountered in input");
-            //return new ResponseEntity<>(new RuntimeException("Invalid Genre"),HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(recordShopService.getAlbumByGenre(genre),HttpStatus.OK);
     }
+    @GetMapping("/albums/genre//year/{year}")
+    pub
 
 }

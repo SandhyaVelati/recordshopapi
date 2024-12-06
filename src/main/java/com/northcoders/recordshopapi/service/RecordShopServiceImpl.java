@@ -135,7 +135,7 @@ public class RecordShopServiceImpl implements RecordShopService{
 
     }
     @Override
-    public Album getAlbumByReleasedDate(Long artistId) {
+    public List<AlbumResponsePojo> getAlbumByReleasedDate(Integer Year) {
         return null;
     }
     @Override
